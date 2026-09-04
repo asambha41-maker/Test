@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Frontend App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            margin-top: 100px;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 { color: #4a4a4a; }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover { background-color: #45a049; }
+        #response {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>मेरा फ्रंटएंड ऐप 🌐</h1>
+    <p>यह पेज रेलवे बैकएंड से कनेक्टेड है।</p>
+    <button class="btn" onclick="checkBackend()">बैकएंड टेस्ट करें</button>
+    <div id="response">बटन पर क्लिक करके रिस्पॉन्स देखें...</div>
+</div>
+
+<script>
+    // आपका लाइव रेलवे URL
+    const BACKEND_URL = "https://railway.app";
+
+    function checkBackend() {
+        document.getElementById('response').innerText = "लोड हो रहा है...";
+        
+        // आपके बैकएंड के मुख्य रूट (/) से डेटा मँगाने के लिए
+        fetch(`${BACKEND_URL}/`)
+            .then(res => res.json())
+            .then(data => {
+                // बैकएंड से मिलने वाले मैसेज को स्क्रीन पर दिखाएं
+                document.getElementById('response').innerText = `सफलता! संदेश: ${data.message} (स्टेटस: ${data.status})`;
+                document.getElementById('response').style.color = "green";
+            })
+            .catch(err => {
+                document.getElementById('response').innerText = "error: कनेक्शन नहीं हो पाया। कृपया बैकएंड के CORS और लॉग्स चेक करें।";
+                document.getElementById('response').style.color = "red";
+                console.error(err);
+            });
+    }
+</script>
+
+</body>
+</html>
